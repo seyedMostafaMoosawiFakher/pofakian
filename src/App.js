@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Frip from './Components/Frip/Frip';
+
 import './App.css';
 
 function App() {
@@ -41,37 +43,43 @@ function App() {
     let allPrices = Frippery.map(frip => {
       return frip.price * frip.count
     })
-const fripperyPrice = allPrices.reduce((equls ,curr)=> equls=equls+curr)
+
+    const fripperyPrice = allPrices.reduce((equls, curr) => equls = equls + curr)
     setFripperyPrice(fripperyPrice)
   }
+
+  let items = Frippery.map((frip, index) => {
+    return (
+      <Frip
+        id={frip.id}
+        name={frip.name}
+        price={frip.price}
+        count={frip.count}
+        fripPlusHandler={() => fripPlusHandler(index)}
+        fripMinesHandler={() => fripMinesHandler(index)}
+      />
+    )
+  })
+
   return (
     <div className="App">
-      {
-        Frippery.map((frip, index) => {
-          return (
-            <div>
-              <div>
+      {items}
+      {FripperyPrice !== 0 ?
+        <p>قیمت نهایی: {FripperyPrice}</p> :
+        <buttton onClick={FripperyPriceHandler}>محاسبه قیمت کل</buttton>
+      }
+
+    </div >
+  );
+}
+
+export default App;
+
+{/* <div>
                 <p>آیدی محصول: <span>{frip.id}</span></p>
                 <p>نام محصول: <span>{frip.name}</span></p>
                 <p>قیمت محصول: <span>{frip.price}</span></p>
                 <button onClick={() => fripPlusHandler(index)}>+</button>
                 <p> تعداد: <span>{frip.count}</span></p>
                 <button onClick={() => fripMinesHandler(index)}>-</button>
-              </div>
-              <div>
-                {FripperyPrice !== 0 ?
-                  <p>قیمت نهایی: {FripperyPrice}</p> :
-                  <buttton onClick={FripperyPriceHandler}>محاسبه قیمت کل</buttton>
-
-                }
-
-              </div>
-            </div>
-          )
-        })
-      }
-    </div>
-  );
-}
-
-export default App;
+              </div> */}
